@@ -1,18 +1,16 @@
 # Function searches parameters
 def parse(query: str) -> dict:
     parameters = {}
-    if query.find('?'):
-        name = query.find('name=')
-        color = query.find('color=')
-        ampersand = query.find('&')
-        name = query[name + 5:ampersand if query.count('&') > 0 else len(query)] if name > -1 else None
-        color = query[color + 6: query.find('&', ampersand + 1) if query.count('&') > 1 else len(query)] if color > -1 else None
-        if name is not None:
-            parameters['name'] = name.replace('&', '')
-        if color is not None:
-            parameters['color'] = color.replace('&', '')
+    name = query.find('name=')
+    color = query.find('color=')
+    ampersand = query.find('&')
+    name = query[name + 5:ampersand if query.count('&') > 0 else len(query)] if name > -1 else None
+    color = query[color + 6: query.find('&', ampersand + 1) if query.count('&') > 1 else len(query)] if color > -1 else None
+    if name is not None:
+        parameters['name'] = name.replace('&', '')
+    if color is not None:
+        parameters['color'] = color.replace('&', '')
     return parameters
-
 
 if __name__ == '__main__':
     assert parse('https://example.com/path/to/page?name=ferret&color=purple') == {'name': 'ferret', 'color': 'purple'}
